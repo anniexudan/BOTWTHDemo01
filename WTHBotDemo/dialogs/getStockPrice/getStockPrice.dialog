@@ -1,0 +1,104 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "4u3wWX",
+    "name": "getStockPrice",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "wMoIJ7"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "4UFvU5"
+          },
+          "activity": "${SendActivity_4UFvU5()}"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "w9ZN8q"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_w9ZN8q()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.companysymbol",
+          "outputFormat": "=trim(this.value)"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "xCngZd"
+          },
+          "method": "GET",
+          "url": "https://finnhub.io/api/v1/quote?symbol=${user.companysymbol}&token=bu2r1sf48v6pqlhnnkng",
+          "resultProperty": "dialog.api_response"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "s6zEFm"
+          },
+          "condition": "dialog.api_response.statusCode == 200",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "XgsUrf"
+              },
+              "property": "dialog.stock",
+              "value": "=dialog.api_response.content"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "GqNQpV"
+              },
+              "activity": "${SendActivity_GqNQpV()}"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "IviJjV"
+              },
+              "property": "user.companysymbol"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "aMbCty"
+              },
+              "activity": "${SendActivity_aMbCty()}"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "fqE97N"
+              },
+              "property": "user.companysymbol"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "getStockPrice.lg",
+  "recognizer": "getStockPrice.lu.qna",
+  "id": "getStockPrice"
+}

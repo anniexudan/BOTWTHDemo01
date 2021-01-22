@@ -1,0 +1,19 @@
+[import](common.lg)
+
+# SendActivity_GGAWYB()
+- Let us connect you with an Agent through Web Video call.
+# SendActivity_tyrIxC()
+-${CallAgent()}
+
+# CallAgent()
+[HeroCard
+    title = Set up a call with agent
+    buttons = ${cardActionTemplate('signin', 'Open Web Call Window', 'https://fsiacs.azurewebsites.net/')}
+]
+# cardActionTemplate(type, title, value)
+[CardAction
+    Type = ${if(type == null, 'imBack', type)}
+    Title = ${title}
+    Value = ${value}
+    Text = ${title}
+]

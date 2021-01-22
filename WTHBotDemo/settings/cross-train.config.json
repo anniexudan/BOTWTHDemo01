@@ -1,0 +1,14 @@
+{
+  "WTHBotDemo.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "ESG": [],
+      "Stock": [
+        "getStockPrice.en-us"
+      ],
+      "CallAgent": [
+        "CallAgent.en-us"
+      ]
+    }
+  }
+}
